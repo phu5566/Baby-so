@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ເອັບເຟັກຄວາມຮັກສວຍງາມທີ່ສຸດ ❤️</title>
+    <style>
+        /* 1. Reset & Font */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        /* 2. ພື້ນຫຼັງໄລ່ສີແບບເຄື່ອນໄຫວ (ສວຍງາມຫຼາຍ) */
+        body {
+            background: linear-gradient(-45deg, #ffcdd2, #ffebee, #f8bbd0, #ffecb3);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite; /* ໃຫ້ສີຄ່ອຍໆປ່ຽນ */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow: hidden; /* ປ້ອງກັນການເລື່ອນໜ້າຈໍ */
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 3. Container ຫຼັກ (ສວຍງາມ, ມີມິຕິ) */
+        .main-container {
+            width: 90%;
+            max-width: 400px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95); /* ພື້ນຫຼັງຂາວໃສໆ */
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(216, 27, 96, 0.15); /* ແສງເງົານຸ່ມນວນ */
+            position: relative;
+            z-index: 10; /* ໃຫ້ຢູ່ເທິງຫົວໃຈລອຍ */
+            backdrop-filter: blur(5px); /* ເຮັດໃຫ້ພື້ນຫຼັງມົວ */
+            border: 2px solid rgba(255, 255, 255, 0.5); /* ຂອບຂາວໃສໆ */
+            transition: transform 0.3s ease;
+        }
+
+        .main-container:hover {
+            transform: translateY(-5px); /* ເອົາເມົາສ໌ໄປຊີ້ແລ້ວເດັ່ງຂຶ້ນ */
+        }
+
+        .gif-box img { width: 100%; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+
+        h1 { color: #d81b60; margin: 20px 0; font-size: 1.6rem; text-shadow: 1px 1px 2px rgba(216, 27, 96, 0.1); }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+            min-height: 150px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* ເພີ່ມ Animation ທີ່ເດັ້ງ */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-yes { 
+            background: linear-gradient(135deg, #d81b60, #ff1744); /* ປຸ່ມ YES ແບບໄລ່ສີ */
+            color: white; 
+            z-index: 20;
+            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3);
+        }
+
+        .btn-yes:hover {
+            box-shadow: 0 8px 25px rgba(216, 27, 96, 0.5);
+            transform: scale(1.05);
+        }
+        
+        .btn-no { 
+            background: white; 
+            color: #d81b60; 
+            border: 2px solid #d81b60;
+            z-index: 15;
+        }
+
+        /* 4. ເອັບເຟັກຫົວໃຈລອຍຟ້າ (Floating Hearts) */
+        .heart {
+            position: fixed;
+            color: rgba(216, 27, 96, 0.15); /* ສີຂໍ້ຄວາມຫົວໃຈໃສໆ */
+            pointer-events: none;
+            z-index: 5;
+            animation: floatingHeart 10s linear infinite;
+        }
+
+        @keyframes floatingHeart {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* ປຸ່ມນ້ອຍໆທີ່ແຕກອອກມາ */
+        .mini-no {
+            position: fixed;
+            padding: 5px 10px;
+            font-size: 12px;
+            background: #ffcdd2;
+            color: #d81b60;
+            border: 1px solid #d81b60;
+            border-radius: 10px;
+            pointer-events: none;
+            z-index: 5;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="mp3/Screen Recording 2026-04-18 221720.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="heart-container"></div>
+
+    <div class="main-container">
+        <div class="gif-box">
+            <img id="main-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDI2eHV5aHVpZnNzMDFjbGxmdXFkaWM0cDM0ajAzMHM5aDl1eXUycyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Zl7u48zLVFgLpRwq6f/giphy.gif" alt="Cat Love">
+        </div>
+        <h1 id="status-text">ເຂົາເອົາດອກໄມ້ມາງໍ້ ງັບ~~~~~~</h1>
+        <p>ເຊົາຄຽດເດີ້ຄົນເກັ່ງ🥺</p>
+        <div class="btn-container">
+            <button class="btn-yes" id="yesBtn">ຮັກ (Yes) ❤️</button>
+            <button class="btn-no" id="noBtn">ບໍ່ (No)</button>
+        </div>
+    </div>
+
+    <audio id="popSound" src="https://www.myinstants.com/media/sounds/pop-94319.mp3"></audio>
+    <audio id="explosionSound" src="https://www.myinstants.com/media/sounds/vine-boom.mp3"></audio>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const statusText = document.getElementById('status-text');
+        const popSound = document.getElementById('popSound');
+        const explosionSound = document.getElementById('explosionSound');
+        const heartContainer = document.getElementById('heart-container');
+
+        // --- ສ້າງຫົວໃຈລອຍຟ້າ ---
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerText = ['❤️', '💖', '💗', '💕', '💘'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 5 + 5 + 's'; // 5-10s
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px'; // 10-30px
+            heartContainer.appendChild(heart);
+            setTimeout(() => heart.remove(), 10000); // ລຶບອອກຫຼັງຈາກ 10s
+        }
+        setInterval(createHeart, 300); // ສ້າງຫົວໃຈທຸກໆ 0.3s
+
+        let clickCount = 0;
+
+        noBtn.addEventListener('click', () => {
+            clickCount++;
+            popSound.currentTime = 0;
+            popSound.play();
+
+            if (clickCount === 1) {
+                noBtn.style.transform = 'scale(1.5)';
+                noBtn.innerText = "ແທ້ບໍ? 😢";
+            } 
+            else if (clickCount === 2) {
+                noBtn.style.transform = 'scale(2.5)';
+                noBtn.innerText = "ຄິດດີໆໃດທີຮັກ!!! ";
+            } 
+            else if (clickCount >= 3) {
+    // 1. ສັ່ງໃຫ້ປຸ່ມລະເບີດ
+    explodeNoButtons();
+    
+    // 2. ເຊື່ອງປຸ່ມ No
+    noBtn.style.display = 'none';
+    
+    // 3. ປ່ຽນຂໍ້ຄວາມ
+    statusText.innerText = "ເຊົາຄຽດເດີ້ທີຮັກເຂົາຮັກເພີ່ນຄົນດຽວ ຈະແອໂອເອ໋";
+    
+    // 4. ປ່ຽນຮູບ GIF ເປັນຮູບແມວຕົກໃຈ (Shocked/Funny Reaction)
+    const mainGif = document.getElementById('main-gif');
+    if (mainGif) {
+        mainGif.src = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDZtZ2F0czAzbHNsbjlndGszdGEycTlsaGt5NDRqcHp4czJzYmwxYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NfzERYyiWcXU4/giphy.gif";
+    }
+}
+        });
+
+        function explodeNoButtons() {
+            explosionSound.play();
+            const rect = noBtn.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            for (let i = 0; i < 70; i++) {
+                setTimeout(() => {
+                    const mini = document.createElement('button');
+                    mini.innerText = 'No!';
+                    mini.className = 'mini-no';
+                    mini.style.left = centerX + 'px';
+                    mini.style.top = centerY + 'px';
+                    document.body.appendChild(mini);
+
+                    const angle = Math.random() * Math.PI * 2;
+                    const dist = Math.random() * (window.innerWidth > 500 ? 700 : 400) + 150;
+                    const x = Math.cos(angle) * dist;
+                    const y = Math.sin(angle) * dist;
+
+                    mini.animate([
+                        { transform: 'translate(-50%, -50%) scale(1) rotate(0deg)', opacity: 1 },
+                        { transform: `translate(${x}px, ${y}px) rotate(${Math.random() * 720}deg) scale(0)`, opacity: 0 }
+                    ], {
+                        duration: 1500 + Math.random() * 1500,
+                        easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)',
+                        fill: 'forwards'
+                    });
+                    setTimeout(() => mini.remove(), 3000);
+                }, i * 8);
+            }
+        }
+
+        yesBtn.addEventListener('click', () => {
+            document.body.innerHTML = `
+                <div class="main-container" style="max-width:400px; padding:30px; background:rgba(255,255,255,0.9); border-radius:25px; box-shadow:0 15px 35px rgba(216, 27, 96, 0.2);">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnJ6M3ZhcGFhMm9odHM3ZGc1ZDM3NDR2bXI1cjc0NmJudmVrOTN2bSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/FM57qpxeflq5Woi0Bj/giphy.gif" style="width:100%">
+                    <h1 style="color:#d81b60">ເຢ້ ທີຮັກເຊົາຄຽດແລ້ວວວວ ❤️✨</h1>
+                    <p style="color:#666; font-size:1.1rem">ຮັກເພີ່ນເດີທິຮັກກກກກກ 😊</p>
+                </div>
+                <div id="heart-container"></div>
+            `;
+            // ເລີ່ມສ້າງຫົວໃຈລອຍຟ້າອີກຄັ້ງໃນ Container ໃໝ່
+            const winHeartContainer = document.getElementById('heart-container');
+            function createHeartWin() {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerText = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 5 + 5 + 's';
+                winHeartContainer.appendChild(heart);
+                setTimeout(() => heart.remove(), 10000);
+            }
+            setInterval(createHeartWin, 200);
+
+            const winSound = new Audio('https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3');
+            winSound.play();
+        });
+
+       // ຟັງຊັນປ່ຽນໜ້າ ແລະ ໃຫ້ເພງຄ່ອຍໆດັງຂຶ້ນ (Fade-in)
+function showLovePage() {
+    // 1. ເຊື່ອງໜ້າດາວໂຫລດ ແລະ ເປີດໜ້າບອກຮັກ
+    document.getElementById('download-page').style.display = 'none';
+    document.getElementById('love-page').style.display = 'block';
+
+    // 2. ເລີ່ມຕົ້ນໃຫ້ສຽງເບົາທີ່ສຸດ (0)
+    bgMusic.volume = 0;
+    bgMusic.play().catch(() => console.log("ຕ້ອງມີການຕອບໂຕ້ກັບໜ້າເວັບກ່ອນ"));
+
+    // 3. ຕັ້ງຄ່າການ Fade-in (ໃຫ້ເພງຄ່ອຍໆດັງຂຶ້ນໃນ 2 ວິນາທີ)
+    let fadeInInterval = setInterval(() => {
+        if (bgMusic.volume < 0.9) {
+            bgMusic.volume += 0.1; // ຄ່ອຍໆເພີ່ມລະດັບສຽງເທື່ອລະ 0.1
+        } else {
+            bgMusic.volume = 1; // ເມື່ອດັງສຸດແລ້ວໃຫ້ຢຸດ
+            clearInterval(fadeInInterval);
+        }
+    }, 200); // ທຸກໆ 0.2 ວິນາທີ ສຽງຈະດັງຂຶ້ນ
+}
+    </script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloading Love... ❤️</title>
+    <style>
+        /* 1. Reset & Font */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', 'Phetsarath OT', sans-serif; }
+
+        body {
+            background: linear-gradient(-45deg, #ffcdd2, #ffebee, #f8bbd0, #e1f5fe);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 2. Card Container */
+        .download-card {
+            width: 90%;
+            max-width: 350px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 20px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(216, 27, 96, 0.1);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid #fff;
+        }
+
+        /* 3. Icon ຕະມຸຕະມິ */
+        .heart-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        h2 { color: #d81b60; margin-bottom: 10px; font-size: 1.2rem; }
+        p { color: #888; font-size: 0.9rem; margin-bottom: 25px; }
+
+        /* 4. ProgressBar ແບບໜ້າຮັກ */
+        .progress-container {
+            width: 100%;
+            height: 15px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            border: 2px solid #fff;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff80ab, #d81b60);
+            border-radius: 20px;
+            transition: width 0.1s linear;
+        }
+
+        .percent-text {
+            color: #d81b60;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* 5. ປຸ່ມເປີດ (ເຊື່ອງໄວ້ກ່ອນ) */
+        .btn-open {
+            margin-top: 20px;
+            padding: 12px 35px;
+            background: #d81b60;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            display: none; /* ເຊື່ອງໄວ້ */
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .btn-open:hover {
+            background: #ad1457;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="download-card">
+        <div class="heart-icon">💖</div>
+        <h2 id="title">ກຳລັງດາວໂຫລດ...</h2>
+        <p id="sub-title">ກະລຸນາລໍຖ້າຈັກຄາວນ່າາາ</p>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div class="percent-text" id="percentText">0%</div>
+
+        <button class="btn-open" id="openBtn" onclick="goToNextPage()">ເປີດເບິ່ງເລີຍ (Open) ✨</button>
+    </div>
+
+    <script>
+        let progress = 0;
+        const progressBar = document.getElementById('progressBar');
+        const percentText = document.getElementById('percentText');
+        const openBtn = document.getElementById('openBtn');
+        const title = document.getElementById('title');
+        const subTitle = document.getElementById('sub-title');
+
+        // ຟັງຊັນຈໍາລອງການດາວໂຫລດ
+        function startDownload() {
+            const interval = setInterval(() => {
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    finishDownload();
+                } else {
+                    // ສຸ່ມຄວາມໄວໃນການໂຫຼດໃຫ້ເບິ່ງຄືຈິງ
+                    progress += Math.floor(Math.random() * 5) + 1;
+                    if(progress > 100) progress = 100;
+                    
+                    progressBar.style.width = progress + '%';
+                    percentText.innerText = progress + '%';
+                }
+            }, 150); // ປັບຄວາມໄວບ່ອນນີ້ (ມິນລິວິນາທີ)
+        }
+
+        function finishDownload() {
+            title.innerText = "ດາວໂຫລດສຳເລັດແລ້ວ!";
+            subTitle.innerText = "ມີບາງຢ່າງພິເສດຖ້າເຈົ້າຢູ່...";
+            percentText.style.display = "none";
+            openBtn.style.display = "inline-block";
+            
+            // ສຽງແຈ້ງເຕືອນເມື່ອສຳເລັດ (Optional)
+            new Audio('https://www.myinstants.com/media/sounds/ding-sound-effect_1.mp3').play().catch(e => {});
+        }
+
+        function goToNextPage() {
+            // ໃສ່ Link ໜ້າເວັບບອກຮັກຂອງເຈົ້າຢູ່ບ່ອນນີ້
+            // ຕົວຢ່າງ: window.location.href = "love_page.html";
+            alert("ກົດຢືນຢັນດພື່ອໄປຫນ້າຕໍ່ໄປ... ❤️"); 
+            // ຖ້າເຮັດເປັນໄຟລ໌ດຽວກັນ ສາມາດໃຊ້ວິທີເຊື່ອງໜ້ານີ້ແລ້ວເປີດໜ້າໃໝ່ໄດ້
+            window.location.href = "index.html";
+        }
+
+        // ເລີ່ມໂຫຼດເມື່ອເປີດໜ້າເວັບ
+        window.onload = startDownload;
+    </script>
+</body>
+</html>
